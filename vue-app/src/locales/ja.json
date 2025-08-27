@@ -1,0 +1,82 @@
+{
+  "greeting": "こんにちは、{name}さん！",
+  "dashboard": {
+    "title": "ダッシュボード",
+    "welcome": "ようこそ！このページは主要な情報を要約して表示するダッシュボードです。",
+    "widget1": {
+      "title": "ウィジェット1",
+      "content": "情報概要"
+    },
+    "widget2": {
+      "title": "ウィジェット2",
+      "content": "チャートまたはデータ"
+    },
+    "widget3": {
+      "title": "ウィジェット3",
+      "content": "ショートカットリンク"
+    }
+  },
+  "admin": {
+    "title": "管理者ページ",
+    "description": "ここは管理者ページです。"
+  },
+  "products": {
+    "title": "商品一覧",
+    "search": {
+      "placeholder": "商品名または説明で検索",
+      "button": "検索",
+      "clear": "クリア"
+    },
+    "table": {
+      "id": "ID",
+      "name": "商品名",
+      "description": "説明"
+    }
+  },
+  "login": {
+    "title": "ログイン",
+    "usernamePlaceholder": "ユーザーID",
+    "passwordPlaceholder": "パスワード",
+    "loginButton": "ログイン",
+    "kakaoButton": "カカオでログイン",
+    "googleButton": "Googleでログイン",
+    "signupPrompt": "アカウントがありませんか？",
+    "signupLink": "会員登録",
+    "alert": {
+      "failure": "ログインに失敗しました: {error}"
+    }
+  },
+  "signup": {
+    "title": "会員登録",
+    "usernamePlaceholder": "ユーザーID",
+    "passwordPlaceholder": "パスワード",
+    "confirmPasswordPlaceholder": "パスワード確認",
+    "signupButton": "会員登録",
+    "loginPrompt": "すでにアカウントをお持ちですか？",
+    "loginLink": "ログイン",
+    "alert": {
+      "passwordMismatch": "パスワードが一致しません。",
+      "success": "会員登録に成功しました！",
+      "failure": "会員登録に失敗しました: {error}"
+    }
+  },
+  "navbar": {
+    "logout": "ログアウト",
+    "login": "ログイン",
+    "signup": "会員登録",
+    "notifications": {
+      "title": "お知らせ",
+      "empty": "新しいお知らせはありません。"
+    }
+  },
+  "sidebar": {
+    "sse": {
+      "connected": "リアルタイム通知接続済み",
+      "disconnected": "リアルタイム通知切断"
+    }
+  },
+  "oauth": {
+    "processing": "{provider} ログイン処理中...",
+    "failure": "{provider} ログインに失敗しました"
+  }
+}

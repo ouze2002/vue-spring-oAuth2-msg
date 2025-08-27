@@ -1,0 +1,96 @@
+/* DataTable Component Styles */
+.data-table-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Table Styles */
+.tabulator {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Header Styles */
+.tabulator .tabulator-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+  padding: 12px 10px;
+  border-right: 1px solid #e0e0e0;
+}
+
+/* Row Styles */
+.tabulator .tabulator-row {
+  background-color: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.tabulator .tabulator-row.tabulator-row-even {
+  background-color: #fdfdfd;
+}
+
+.tabulator .tabulator-row:hover {
+  background-color: #f5f5f5 !important;
+}
+
+/* Cell Styles */
+.tabulator .tabulator-cell {
+  padding: 10px;
+  border-right: 1px solid #f0f0f0;
+}
+
+/* Pagination Styles */
+.tabulator .tabulator-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e0e0e0;
+  padding: 10px;
+}
+
+.tabulator .tabulator-footer .tabulator-page.active {
+    color: #ffffff;
+}
+
+.tabulator .tabulator-page {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  color: #4a90e2;
+  border-radius: 4px;
+  margin: 0 4px;
+  padding: 6px 10px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.tabulator .tabulator-page.active {
+  background-color: #4a90e2;
+  color: white;
+  border-color: #4a90e2;
+}
+
+.tabulator .tabulator-page:hover:not(.active) {
+  background-color: #e9f2fa;
+  color: #4a90e2;
+}
+
+/* Header Filter Styles */
+.tabulator-col .tabulator-header-filter input {
+  width: calc(100% - 20px);
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.tabulator-col .tabulator-header-filter input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}

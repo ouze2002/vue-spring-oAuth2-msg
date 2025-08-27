@@ -1,0 +1,87 @@
+/* Products Page Styles */
+.products-container {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.search-controls {
+  margin-bottom: 30px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.search-controls input {
+  flex-grow: 1;
+  padding: 12px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-controls input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.search-controls button {
+  padding: 12px 25px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.search-controls button:last-child {
+  background-color: #f44336;
+}
+
+.search-controls button:hover {
+  transform: translateY(-1px);
+}
+
+.search-controls button:active {
+  transform: translateY(0);
+}
+
+.search-controls button:first-child:hover {
+  background-color: #357ab8;
+}
+
+.search-controls button:last-child:hover {
+  background-color: #e53935;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .products-container {
+    padding: 20px;
+    margin: 15px;
+  }
+  
+  .search-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .search-controls input,
+  .search-controls button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "greeting": "Hello, {name}!",
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome! This is the dashboard page that summarizes key information.",
+    "widget1": {
+      "title": "Widget 1",
+      "content": "Information Summary"
+    },
+    "widget2": {
+      "title": "Widget 2",
+      "content": "Chart or Data"
+    },
+    "widget3": {
+      "title": "Widget 3",
+      "content": "Shortcut Links"
+    }
+  },
+  "admin": {
+    "title": "Admin Page",
+    "description": "This is the admin page."
+  },
+  "products": {
+    "title": "Product List",
+    "search": {
+      "placeholder": "Search by product name or description",
+      "button": "Search",
+      "clear": "Clear"
+    },
+    "table": {
+      "id": "ID",
+      "name": "Product Name",
+      "description": "Description"
+    }
+  },
+  "login": {
+    "title": "Login",
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Password",
+    "loginButton": "Login",
+    "kakaoButton": "Login with Kakao",
+    "googleButton": "Login with Google",
+    "signupPrompt": "Don't have an account?",
+    "signupLink": "Sign up",
+    "alert": {
+      "failure": "Login failed: {error}"
+    }
+  },
+  "signup": {
+    "title": "Sign Up",
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordPlaceholder": "Confirm Password",
+    "signupButton": "Sign Up",
+    "loginPrompt": "Already have an account?",
+    "loginLink": "Login",
+    "alert": {
+      "passwordMismatch": "Passwords do not match.",
+      "success": "Sign up successful!",
+      "failure": "Sign up failed: {error}"
+    }
+  },
+  "navbar": {
+    "logout": "Logout",
+    "login": "Login",
+    "signup": "Sign up",
+    "notifications": {
+      "title": "Notifications",
+      "empty": "No new notifications."
+    }
+  },
+  "sidebar": {
+    "sse": {
+      "connected": "Real-time notifications connected",
+      "disconnected": "Real-time notifications disconnected"
+    }
+  },
+  "oauth": {
+    "processing": "Processing {provider} login...",
+    "failure": "{provider} login failed"
+  }
+}

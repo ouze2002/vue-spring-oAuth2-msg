@@ -1,0 +1,82 @@
+{
+  "greeting": "안녕하세요, {name}님!",
+  "dashboard": {
+    "title": "대시보드",
+    "welcome": "환영합니다! 이 페이지는 주요 정보를 요약해서 보여주는 대시보드입니다.",
+    "widget1": {
+      "title": "위젯 1",
+      "content": "정보 요약"
+    },
+    "widget2": {
+      "title": "위젯 2",
+      "content": "차트 또는 데이터"
+    },
+    "widget3": {
+      "title": "위젯 3",
+      "content": "바로가기 링크"
+    }
+  },
+  "admin": {
+    "title": "관리자 페이지",
+    "description": "이곳은 관리자 페이지입니다."
+  },
+  "products": {
+    "title": "상품 목록",
+    "search": {
+      "placeholder": "상품 이름 또는 설명 검색",
+      "button": "검색",
+      "clear": "초기화"
+    },
+    "table": {
+      "id": "ID",
+      "name": "상품 이름",
+      "description": "설명"
+    }
+  },
+  "login": {
+    "title": "로그인",
+    "usernamePlaceholder": "아이디",
+    "passwordPlaceholder": "비밀번호",
+    "loginButton": "로그인",
+    "kakaoButton": "카카오 로그인",
+    "googleButton": "구글 로그인",
+    "signupPrompt": "계정이 없으신가요?",
+    "signupLink": "회원가입",
+    "alert": {
+      "failure": "로그인 실패: {error}"
+    }
+  },
+  "signup": {
+    "title": "회원가입",
+    "usernamePlaceholder": "아이디",
+    "passwordPlaceholder": "비밀번호",
+    "confirmPasswordPlaceholder": "비밀번호 확인",
+    "signupButton": "회원가입",
+    "loginPrompt": "이미 계정이 있으신가요?",
+    "loginLink": "로그인",
+    "alert": {
+      "passwordMismatch": "비밀번호가 일치하지 않습니다.",
+      "success": "회원가입 성공!",
+      "failure": "회원가입 실패: {error}"
+    }
+  },
+  "navbar": {
+    "logout": "로그아웃",
+    "login": "로그인",
+    "signup": "회원가입",
+    "notifications": {
+      "title": "알림",
+      "empty": "새로운 알림이 없습니다."
+    }
+  },
+  "sidebar": {
+    "sse": {
+      "connected": "실시간 알림 연결됨",
+      "disconnected": "실시간 알림 연결 끊김"
+    }
+  },
+  "oauth": {
+    "processing": "{provider} 로그인 처리 중...",
+    "failure": "{provider} 로그인 실패"
+  }
+}
