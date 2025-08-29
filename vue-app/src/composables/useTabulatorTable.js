@@ -2,7 +2,7 @@ import { ref, onMounted, onUnmounted, watch, isRef } from 'vue';
 import { TabulatorFull as Tabulator } from 'tabulator-tables';
 import 'tabulator-tables/dist/css/tabulator_simple.min.css';
 import '@/styles/data-table.css';
-import Cookies from 'js-cookie';
+import axiosInstance from '@/api/axiosInstance';
 
 export function useTabulatorTable(options) {
   const {
@@ -37,12 +37,18 @@ export function useTabulatorTable(options) {
       paginationSize: pageSize,
       paginationSizeSelector: pageSizes,
       ajaxURL: dataUrl,
-      ajaxContentType: "json",
       sortMode: "remote",
       filterMode: "remote",
-      ajaxConfig: {
-        headers: {
-            "Authorization": `Bearer ${Cookies.get('accessToken')}`
+      
+      ajaxRequestFunc: async function(url, config, params) {
+        try {
+          console.log('Tabulator ajaxRequestFunc called with:', { url, config, params });
+          const response = await axiosInstance.get(url);
+          console.log('Tabulator response:', response.data);
+          return response.data;
+        } catch (error) {
+          console.error('Tabulator data load error:', error);
+          throw error;
         }
       },
       ajaxURLGenerator: function (url, config, params) {
@@ -66,7 +72,9 @@ export function useTabulatorTable(options) {
           });
         }
 
-        return `${url}?${urlParams.toString()}`;
+        const finalUrl = `${dataUrl}?${urlParams.toString()}`;
+        console.log('Tabulator ajaxURLGenerator generated URL:', finalUrl);
+        return finalUrl;
       },
 
       ajaxResponse: function (url, params, response) {
