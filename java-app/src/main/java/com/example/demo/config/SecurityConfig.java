@@ -21,14 +21,14 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String[] WHITE_LIST = {
+    private static final String[] PUBLIC_ENDPOINTS = {
         "/actuator/**",
         "/api/auth/**",
         "/api/notifications/subscribe",
         "/api/notifications/send"
     };
 
-    private static final String[] ADMIN_LIST = {
+    private static final String[] ADMIN_ENDPOINTS = {
         "/api/admin/**"
     };
 
@@ -47,8 +47,8 @@ public class SecurityConfig {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden"))
             )
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers(WHITE_LIST).permitAll()
-                .requestMatchers(ADMIN_LIST).hasRole("ADMIN")
+                .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
+                .requestMatchers(ADMIN_ENDPOINTS).hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
