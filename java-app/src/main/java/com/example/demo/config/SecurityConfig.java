@@ -21,6 +21,15 @@ import jakarta.servlet.http.HttpServletResponse;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final String[] WHITE_LIST = {
+        "/api/items/**",
+        "/actuator/**",
+        "/api/auth/**",
+        "/api/menus/**",
+        "/api/notifications/subscribe",
+        "/api/notifications/send"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
@@ -36,17 +45,10 @@ public class SecurityConfig {
                     response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden"))
             )
             .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/api/items/**").permitAll()
-                .requestMatchers("/actuator/**").permitAll()
-                .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/menus/**").permitAll()
-                .requestMatchers("/api/notifications/subscribe").permitAll()
-                .requestMatchers("/api/notifications/send").permitAll()
-                .requestMatchers("/api/notifications/**").authenticated()
-                
+                .requestMatchers(WHITE_LIST).permitAll()
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/private/**").hasAnyRole("USER", "ADMIN")
-                .anyRequest().denyAll()
+                .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

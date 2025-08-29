@@ -11,7 +11,7 @@
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance, { calculateCookieExpires } from '@/api/axiosInstance';
 import Cookies from 'js-cookie';
 import { useUserStore } from '@/store/user';
 
@@ -38,7 +38,8 @@ onMounted(async () => {
       });
 
       const accessToken = res.data.accessToken;
-      Cookies.set("accessToken", accessToken, { expires: 0.021 });
+      const expires = calculateCookieExpires(accessToken);
+      Cookies.set("accessToken", accessToken, { expires });
       userStore.setUserFromToken(accessToken);
       window.location.href = "/";
     } catch (err) {

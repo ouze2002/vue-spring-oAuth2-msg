@@ -20,7 +20,7 @@
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance, { calculateCookieExpires } from '@/api/axiosInstance';
 import Cookies from 'js-cookie';
 import { useUserStore } from '@/store/user';
 
@@ -38,7 +38,8 @@ const handleLogin = async () => {
       { withCredentials: true }
     );
 
-    Cookies.set('accessToken', res.data.accessToken, { expires: 0.021, path: '/' });
+    const expires = calculateCookieExpires(res.data.accessToken);
+    Cookies.set('accessToken', res.data.accessToken, { expires, path: '/' });
     userStore.setUserFromToken(res.data.accessToken);
     
     // 대시보드로 이동

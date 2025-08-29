@@ -1,10 +1,28 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true, // 쿠키도 함께 전송 (refresh token용)
 });
+
+// 토큰에서 만료 시간을 추출하여 쿠키 expires 계산
+const calculateCookieExpires = (token) => {
+  try {
+    const decoded = jwtDecode(token);
+    const exp = decoded.exp; // Unix timestamp
+    const now = Math.floor(Date.now() / 1000);
+    const remainingSeconds = exp - now;
+    const remainingDays = remainingSeconds / (24 * 60 * 60);
+    
+    // 최소 1분, 최대 토큰 만료 시간까지
+    return Math.max(remainingDays, 1 / 1440); // 1분 = 1/1440일
+  } catch (error) {
+    console.error('토큰 만료 시간 계산 실패:', error);
+    return 0.021; // 기본값 30분
+  }
+};
 
 // 요청 인터셉터
 axiosInstance.interceptors.request.use(
@@ -39,8 +57,9 @@ export const setupInterceptors = (userStore, router) => {
           );
           const newAccessToken = res.data.accessToken;
 
-          // 1. 쿠키에 저장
-          Cookies.set("accessToken", newAccessToken, { expires: 0.021 }); // expires 추가
+          // 1. 쿠키에 저장 (토큰 만료 시간에 맞춰 동적 설정)
+          const expires = calculateCookieExpires(newAccessToken);
+          Cookies.set("accessToken", newAccessToken, { expires });
           console.log('Interceptor: New accessToken set in cookie.');
 
           // 2. Authorization 헤더 갱신
@@ -68,3 +87,4 @@ export const setupInterceptors = (userStore, router) => {
 };
 
 export default axiosInstance;
+export { calculateCookieExpires };
