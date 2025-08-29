@@ -49,7 +49,7 @@ export const useUserStore = defineStore('user', {
       } catch (error) {
         console.error('메뉴 정보를 가져오는데 실패했습니다.', error);
         this.setMenus([]); // 실패 시 메뉴 초기화
-        return []; // 빈 배열 반환
+        throw error; // 에러를 다시 던져서 인터셉터가 처리하도록 함
       }
     },
     setUserFromToken(token) {

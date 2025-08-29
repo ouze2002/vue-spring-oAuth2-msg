@@ -13,16 +13,21 @@ async function initializeApp() {
   app.use(pinia);
   app.use(i18n);
 
-  // 동적 라우트 설정을 기다립니다.
-  await setupDynamicRoutes();
-
-  // 라우터는 모든 동적 경로가 준비된 후에 사용합니다.
-  app.use(router);
-
-  // 인터셉터 설정
+  // 인터셉터를 먼저 설정
   const userStore = useUserStore();
   app.config.globalProperties.$axios = axiosInstance;
   setupInterceptors(userStore, router);
+
+  // 인터셉터 설정 후 동적 라우트 설정
+  try {
+    await setupDynamicRoutes();
+  } catch (error) {
+    console.error('Dynamic routes setup failed:', error);
+    // 에러가 발생해도 앱은 계속 실행 (기본 라우트들은 동작)
+  }
+
+  // 동적 라우트 설정 완료 후 라우터 등록
+  app.use(router);
 
   // 모든 설정이 완료된 후 앱을 마운트합니다.
   app.mount('#app');
