@@ -72,7 +72,8 @@ export async function setupDynamicRoutes() {
       hasGeneratedRoutes = true;
     } catch (error) {
       console.error('Failed to create dynamic routes:', error);
-      userStore.logout();
+      // 401 에러는 인터셉터가 처리하도록 에러를 다시 던짐
+      throw error;
     }
   }
 
