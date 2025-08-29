@@ -3,6 +3,8 @@ package com.example.demo.util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.security.Key;
 import java.util.Date;
@@ -11,13 +13,14 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // 랜덤 키
-    private final long expiration = 1000L * 60 * 1; // 1시간
+    private static final int ACCESS_TOKEN_MINUTES = 1; // 1분 (테스트용)
+    private static final int REFRESH_TOKEN_DAYS = 7; // 7일
 
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_MINUTES * 60 * 1000L))
                 .signWith(key)
                 .compact();
     }
@@ -27,19 +30,34 @@ public class JwtTokenProvider {
                 .setSubject(username)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_MINUTES * 60 * 1000L))
                 .signWith(key)
                 .compact();
     }
 
     public String generateRefreshToken(String username) {
-        long expiration_7d = 1000L * 60 * 60 * 24 * 7;
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration_7d))
+                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_DAYS * 24 * 60 * 60 * 1000L))
                 .signWith(key)
                 .compact();
+    }
+
+    public void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
+        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(REFRESH_TOKEN_DAYS * 24 * 60 * 60);
+        response.addCookie(refreshCookie);
+    }
+
+    public void clearRefreshTokenCookie(HttpServletResponse response) {
+        Cookie refreshCookie = new Cookie("refreshToken", null);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(0);
+        response.addCookie(refreshCookie);
     }
 
     public String getUsernameFromToken(String token) {

@@ -4,6 +4,7 @@ import com.example.demo.dto.LoginResponseDto;
 import com.example.demo.entity.Users;
 import com.example.demo.repository.UsersRepository;
 import com.example.demo.util.JwtTokenProvider;
+import com.example.demo.util.EncryptionUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -93,15 +94,11 @@ public class KakaoOAuthService {
         String accessToken = jwtTokenProvider.generateAccessToken(username, user.getRole());
         String refreshToken = jwtTokenProvider.generateRefreshToken(username);
 
-        user.setRefreshToken(refreshToken);
+        user.setRefreshToken(EncryptionUtil.encrypt(refreshToken));
         usersRepository.save(user);
 
         // 5. 쿠키 설정
-        Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setMaxAge(7 * 24 * 60 * 60);
-        refreshCookie.setPath("/");
-        response.addCookie(refreshCookie);
+        jwtTokenProvider.setRefreshTokenCookie(response, refreshToken);
 
         return new LoginResponseDto(accessToken, null);
     }

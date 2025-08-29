@@ -47,18 +47,14 @@ public class UsersController {
         LoginResponseDto tokens = usersService.login(request);
 
         // Refresh Token을 HttpOnly 쿠키로 설정
-        Cookie refreshCookie = new Cookie("refreshToken", tokens.getRefreshToken());
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(7 * 24 * 60 * 60); // 7일
-        response.addCookie(refreshCookie);
+        jwtTokenProvider.setRefreshTokenCookie(response, tokens.getRefreshToken());
 
         // Access Token은 클라이언트가 저장
         return ResponseEntity.ok(new LoginResponseDto(tokens.getAccessToken(), null));
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<?> refresh(HttpServletRequest request) {
+    public ResponseEntity<?> refresh(HttpServletRequest request, HttpServletResponse response) {
         // 쿠키에서 Refresh Token 추출
         String refreshToken = null;
         if (request.getCookies() != null) {
@@ -75,6 +71,10 @@ public class UsersController {
 
         try {
             LoginResponseDto tokens = usersService.refresh(refreshToken); // Service 계층의 refresh 호출
+            
+            // 새로 발급된 Refresh Token을 HttpOnly 쿠키로 설정
+            jwtTokenProvider.setRefreshTokenCookie(response, tokens.getRefreshToken());
+            
             return ResponseEntity.ok(new LoginResponseDto(tokens.getAccessToken(), null)); // Access Token만 반환
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
@@ -96,11 +96,7 @@ public class UsersController {
         usersService.updateUsers(user);
 
         // 쿠키 삭제
-        Cookie refreshCookie = new Cookie("refreshToken", null);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setMaxAge(0);
-        refreshCookie.setPath("/");
-        response.addCookie(refreshCookie);
+        jwtTokenProvider.clearRefreshTokenCookie(response);
 
         return ResponseEntity.ok("로그아웃 성공");
     }
