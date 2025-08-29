@@ -76,13 +76,20 @@ export async function setupDynamicRoutes() {
     }
   }
 
-  // 모든 라우트가 설정된 후 마지막에 404 라우트를 추가합니다.
-  router.addRoute({
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: modules['/src/views/NotFound.vue'],
-    meta: { layout: 'SimpleLayout' },
-  });
+  // 404 라우트 추가 (인증 상태에 따라 조건부)
+  if (!isAuthenticated || (isAuthenticated && hasGeneratedRoutes)) {
+    // 기존 404 라우트가 있으면 제거
+    if (router.hasRoute('NotFound')) {
+      router.removeRoute('NotFound');
+    }
+    
+    router.addRoute({
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: modules['/src/views/NotFound.vue'],
+      meta: { layout: 'SimpleLayout' },
+    });
+  }
 }
 
 router.beforeEach(async (to, from, next) => {

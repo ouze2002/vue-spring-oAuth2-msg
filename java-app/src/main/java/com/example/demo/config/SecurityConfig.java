@@ -25,7 +25,7 @@ public class SecurityConfig {
         "/api/items/**",
         "/actuator/**",
         "/api/auth/**",
-        "/api/menus/**",
+        //"/api/menus/**",
         "/api/notifications/subscribe",
         "/api/notifications/send"
     };
