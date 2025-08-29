@@ -28,6 +28,10 @@ public class SecurityConfig {
         "/api/notifications/send"
     };
 
+    private static final String[] ADMIN_LIST = {
+        "/api/admin/**"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
@@ -44,8 +48,7 @@ public class SecurityConfig {
             )
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(WHITE_LIST).permitAll()
-                .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                .requestMatchers("/api/private/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(ADMIN_LIST).hasRole("ADMIN")
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
