@@ -13,7 +13,7 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // 랜덤 키
-    private static final int ACCESS_TOKEN_MINUTES = 1; // 1분 (테스트용)
+    private static final int ACCESS_TOKEN_MINUTES = 30; // 30분
     private static final int REFRESH_TOKEN_DAYS = 7; // 7일
 
     public String generateToken(String username) {
