@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SecurityConfig {
 
     private static final String[] WHITE_LIST = {
-        "/api/items/**",
+        //"/api/items/**",
         "/actuator/**",
         "/api/auth/**",
         //"/api/menus/**",
