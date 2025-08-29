@@ -3,6 +3,7 @@ package com.example.demo.util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -13,14 +14,17 @@ import java.util.Date;
 public class JwtTokenProvider {
 
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); // 랜덤 키
-    private static final int ACCESS_TOKEN_MINUTES = 30; // 30분
-    private static final int REFRESH_TOKEN_DAYS = 7; // 7일
+    @Value("${jwt.access-token.expiration-minutes:30}")
+    private int accessTokenMinutes; // 분 단위
+
+    @Value("${jwt.refresh-token.expiration-days:7}")
+    private int refreshTokenDays; // 일 단위
 
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_MINUTES * 60 * 1000L))
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenMinutes * 60 * 1000L))
                 .signWith(key)
                 .compact();
     }
@@ -30,7 +34,7 @@ public class JwtTokenProvider {
                 .setSubject(username)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_MINUTES * 60 * 1000L))
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenMinutes * 60 * 1000L))
                 .signWith(key)
                 .compact();
     }
@@ -39,7 +43,7 @@ public class JwtTokenProvider {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + REFRESH_TOKEN_DAYS * 24 * 60 * 60 * 1000L))
+                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenDays * 24L * 60 * 60 * 1000))
                 .signWith(key)
                 .compact();
     }
@@ -48,7 +52,7 @@ public class JwtTokenProvider {
         Cookie refreshCookie = new Cookie("refreshToken", refreshToken);
         refreshCookie.setHttpOnly(true);
         refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(REFRESH_TOKEN_DAYS * 24 * 60 * 60);
+        refreshCookie.setMaxAge(refreshTokenDays * 24 * 60 * 60);
         response.addCookie(refreshCookie);
     }
 

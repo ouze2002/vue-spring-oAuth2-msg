@@ -28,7 +28,7 @@ const { t } = useI18n();
 const searchInput = ref('');
 const searchQuery = ref('');
 
-const apiUrl = computed(() => `${import.meta.env.VITE_API_URL}/items`);
+const apiUrl = computed(() => `/items`);
 
 const columns = computed(() => [
   { title: t('products.table.id'), field: "id", width: 80 },
