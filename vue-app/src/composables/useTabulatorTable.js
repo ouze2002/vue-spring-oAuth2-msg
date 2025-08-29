@@ -2,6 +2,7 @@ import { ref, onMounted, onUnmounted, watch, isRef } from 'vue';
 import { TabulatorFull as Tabulator } from 'tabulator-tables';
 import 'tabulator-tables/dist/css/tabulator_simple.min.css';
 import '@/styles/data-table.css';
+import Cookies from 'js-cookie';
 
 export function useTabulatorTable(options) {
   const {
@@ -39,7 +40,11 @@ export function useTabulatorTable(options) {
       ajaxContentType: "json",
       sortMode: "remote",
       filterMode: "remote",
-
+      ajaxConfig: {
+        headers: {
+            "Authorization": `Bearer ${Cookies.get('accessToken')}`
+        }
+      },
       ajaxURLGenerator: function (url, config, params) {
         const urlParams = new URLSearchParams();
 
